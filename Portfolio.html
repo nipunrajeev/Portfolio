@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nipun Rajeev V M - Data Science Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --matrix-green: #00ff41;
+            --dark-bg: #0a192f;
+            --terminal-text: #20c20e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: #ccd6f6;
+            overflow-x: hidden;
+        }
+
+        .code-font {
+            font-family: 'Source Code Pro', monospace;
+        }
+
+        header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .typewriter {
+            border-right: 2px solid var(--matrix-green);
+            animation: typing 3s steps(40), blink-caret 0.75s step-end infinite;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 1.5rem;
+        }
+
+        nav {
+            padding: 1.5rem;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+        }
+
+        nav a {
+            color: #64ffda;
+            text-decoration: none;
+            position: relative;
+            padding: 0.5rem 1rem;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--matrix-green);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--matrix-green);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: rgba(17, 34, 64, 0.5);
+            border-radius: 10px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(100, 255, 218, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .tech-tag {
+            display: inline-block;
+            background: rgba(100, 255, 218, 0.1);
+            color: #64ffda;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.5rem 0.3rem;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+        }
+
+        .data-visualization {
+            background: rgba(17, 34, 64, 0.5);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+         /* Add this media query for mobile responsiveness */
+        @media (max-width: 768px) {
+            .data-visualization {
+                width: 90%;
+                height: 300px;
+            }
+        }
+
+        .terminal-window {
+            background: #011627;
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'Source Code Pro', monospace;
+            color: var(--terminal-text);
+            margin: 2rem 0;
+        }
+
+        .terminal-prompt::before {
+            content: '> ';
+            color: var(--matrix-green);
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--matrix-green) }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <canvas class="matrix-bg" id="matrixCanvas"></canvas>
+        <h1 class="hero-title code-font">Nipun Rajeev V M()</h1>
+        <div class="typewriter code-font">Turning Data Into Decisions</div>
+    </header>
+
+    <nav>
+        <ul class="code-font">
+            <li><a href="#about">.about()</a></li>
+            <li><a href="#skills">.skills()</a></li>
+            <li><a href="#projects">.projects()</a></li>
+            <li><a href="#contact">.contact()</a></li>
+        </ul>
+    </nav>
+
+    <section id="about">
+        <h2 class="section-title code-font">About</h2>
+        <div class="terminal-window">
+            <p class="terminal-prompt">$ Nipun Rajeev V M --profile</p>
+            <p>> Data Science Engineer with expertise in ML pipelines & AI solutions</p>
+            <p>> Specialties: Deep Learning, Big Data Analytics, Cloud ML Systems</p>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title code-font">Skills</h2>
+        <div class="data-visualization">
+            <canvas id="skillsChart"></canvas>
+        </div>
+    </section>
+
+   <!-- Update the Projects Section -->
+<section id="projects">
+    <h2 class="section-title code-font">Projects</h2>
+    <div class="project-grid">
+        <!-- Movie Recommendation System -->
+        <div class="project-card">
+            <h3>🎬 Movie Recommendation System</h3>
+            <div class="tech-tags">
+                <span class="tech-tag code-font">NLP</span>
+                <span class="tech-tag code-font">Machine Learning</span>
+                <span class="tech-tag code-font">Streamlit</span>
+                <span class="tech-tag code-font">Cosine Similarity</span>
+            </div>
+            <p>Processed 10K+ movies with 5K tags using NLTK</p>
+            <div class="terminal-window" style="margin-top: 1rem;">
+                <p class="terminal-prompt">$ system_performance</p>
+                <p>Accuracy: 92% | Queries/min: 100+</p>
+            </div>
+        </div>
+
+        <!-- Digit Recognizer -->
+        <div class="project-card">
+            <h3>🔢 Neural Digit Recognizer</h3>
+            <div class="tech-tags">
+                <span class="tech-tag code-font">Python</span>
+                <span class="tech-tag code-font">Neural Networks</span>
+                <span class="tech-tag code-font">Backpropagation</span>
+                <span class="tech-tag code-font">NumPy</span>
+            </div>
+            <p>Custom neural network with gradient descent optimization</p>
+            <div class="terminal-window" style="margin-top: 1rem;">
+                <p class="terminal-prompt">$ test_results</p>
+                <p>Accuracy: 78% | Epochs: 500+</p>
+            </div>
+        </div>
+
+        <!-- Stock Prediction -->
+        <div class="project-card">
+            <h3>📈 Stock Market Predictor</h3>
+            <div class="tech-tags">
+                <span class="tech-tag code-font">LSTM</span>
+                <span class="tech-tag code-font">Scikit-learn</span>
+                <span class="tech-tag code-font">Time Series</span>
+                <span class="tech-tag code-font">Financial Data</span>
+            </div>
+            <p>5+ years historical analysis with MA/Linear Regression/LSTM</p>
+            <div class="terminal-window" style="margin-top: 1rem;">
+                <p class="terminal-prompt">$ data_processed</p>
+                <p>Stock Splits Handled: 15+ | Models Deployed: 3</p>
+            </div>
+        </div>
+
+        <!-- Kerala Dairy -->
+        <div class="project-card">
+            <h3>🐄 Kerala Dairy Platform</h3>
+            <div class="tech-tags">
+                <span class="tech-tag code-font">React.js</span>
+                <span class="tech-tag code-font">B2B</span>
+                <span class="tech-tag code-font">Market Analysis</span>
+                <span class="tech-tag code-font">Digital Payments</span>
+            </div>
+            <p>Digital marketplace with ₹45.6Cr projected revenue</p>
+            <div class="terminal-window" style="margin-top: 1rem;">
+                <p class="terminal-prompt">$ platform_stats</p>
+                <p>Farmers Connected: 1200+ | Transactions: 500+/day</p>
+            </div>
+        </div>
+
+        <!-- Uber Analytics -->
+        <div class="project-card">
+            <h3>🚕 Uber Data Analytics</h3>
+            <div class="tech-tags">
+                <span class="tech-tag code-font">BigQuery</span>
+                <span class="tech-tag code-font">Google Cloud</span>
+                <span class="tech-tag code-font">ETL</span>
+                <span class="tech-tag code-font">Looker Studio</span>
+            </div>
+            <p>Processed 1M+ trips with 25% faster pipeline</p>
+            <div class="terminal-window" style="margin-top: 1rem;">
+                <p class="terminal-prompt">$ system_stats</p>
+                <p>Data Rows: 500K+ | Processing Time: 2.5ms/row</p>
+            </div>
+        </div>
+
+        <!-- Code Editor -->
+        <div class="project-card">
+            <h3>👨💻 Realtime Code Editor</h3>
+            <div class="tech-tags">
+                <span class="tech-tag code-font">Node.js</span>
+                <span class="tech-tag code-font">React</span>
+                <span class="tech-tag code-font">WebSockets</span>
+                <span class="tech-tag code-font">Docker</span>
+            </div>
+            <p>Real-time collaboration with 25% productivity boost</p>
+            <div class="terminal-window" style="margin-top: 1rem;">
+                <p class="terminal-prompt">$ performance</p>
+                <p>Latency: 28ms | Concurrent Users: 50+</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Add this Contact Section -->
+<section id="contact">
+    <h2 class="section-title code-font">.contact()</h2>
+    <div class="terminal-window">
+        <form id="contactForm" action="https://formspree.io/f/xrbeqwak" method="POST">
+            <div class="form-group">
+                <label class="terminal-prompt" for="name">$ Name:</label>
+                <input type="text" id="name" name="name" required class="code-font">
+            </div>
+            
+            <div class="form-group">
+                <label class="terminal-prompt" for="email">$ Email:</label>
+                <input type="email" id="email" name="email" required class="code-font">
+            </div>
+
+            <div class="form-group">
+                <label class="terminal-prompt" for="message">$ Message:</label>
+                <textarea id="message" name="message" rows="5" required class="code-font"></textarea>
+            </div>
+
+            <button type="submit" class="glow-button code-font">
+                > Send Message
+            </button>
+        </form>
+        <div id="formStatus" class="status-message"></div>
+    </div>
+</section>
+
+<!-- Add this CSS -->
+<style>
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 0.8rem;
+        background: #011627;
+        border: 1px solid #1E2D3D;
+        color: var(--terminal-text);
+        font-family: 'Source Code Pro', monospace;
+        border-radius: 4px;
+        transition: all 0.3s;
+    }
+
+    input:focus, textarea:focus {
+        border-color: var(--matrix-green);
+        outline: none;
+        box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+    }
+
+    .glow-button {
+        background: var(--dark-bg);
+        color: var(--matrix-green);
+        border: 2px solid var(--matrix-green);
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        border-radius: 4px;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .glow-button:hover {
+        background: var(--matrix-green);
+        color: var(--dark-bg);
+        box-shadow: 0 0 15px var(--matrix-green);
+    }
+
+    .status-message {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 4px;
+        text-align: center;
+        font-family: 'Source Code Pro', monospace;
+    }
+
+    .success {
+        background: rgba(0, 255, 65, 0.1);
+        border: 1px solid var(--matrix-green);
+        color: var(--matrix-green);
+    }
+
+    .error {
+        background: rgba(255, 0, 65, 0.1);
+        border: 1px solid #ff0041;
+        color: #ff0041;
+    }
+</style>
+<!-- Add this CSS at the end of your existing styles -->
+<style>
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .typewriter {
+            font-size: 1.2rem;
+        }
+
+        nav ul {
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem 0;
+        }
+
+        nav a {
+            padding: 0.5rem;
+            display: block;
+            text-align: center;
+        }
+
+        section {
+            padding: 4rem 1rem;
+        }
+
+        .project-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            padding: 1.5rem;
+        }
+
+        .terminal-window {
+            padding: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .tech-tag {
+            font-size: 0.8rem;
+            padding: 0.2rem 0.8rem;
+        }
+
+        .data-visualization {
+            width: 90%;
+            height: 300px;
+            padding: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+        }
+
+        .section-title::after {
+            width: 40px;
+            bottom: -8px;
+        }
+
+        .glow-button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        /* Matrix animation optimization */
+        #matrixCanvas {
+            display: none;
+        }
+
+        /* Contact form adjustments */
+        input, textarea {
+            padding: 0.6rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .typewriter {
+            font-size: 1rem;
+        }
+
+        .tech-tags {
+            justify-content: center;
+        }
+
+        .terminal-prompt::before {
+            content: '>';
+            margin-right: 0.3rem;
+        }
+
+        .status-message {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+<!-- Add this JavaScript -->
+<script>
+    const form = document.getElementById('contactForm');
+    const statusMessage = document.getElementById('formStatus');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Show loading state
+        statusMessage.textContent = "> Sending message...";
+        statusMessage.className = "status-message";
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                statusMessage.textContent = "Message sent successfully! 💌";
+                statusMessage.className = "status-message success";
+                form.reset();
+            } else {
+                throw new Error('Form submission failed');
+            }
+        } catch (error) {
+            statusMessage.textContent = "Error sending message. Please try again. 🚨";
+            statusMessage.className = "status-message error";
+        }
+    });
+</script>
+
+
+<!-- Update the Skills Chart JavaScript -->
+<script>
+    // Updated Skills Radar Chart
+    const skillsCtx = document.getElementById('skillsChart').getContext('2d');
+    new Chart(skillsCtx, {
+        type: 'radar',
+        data: {
+            labels: ['Python', 'Machine Learning', 'NLP', 'SQL', 'Google Cloud', 'Data Analysis', 'Big Data', 'Tableau'],
+            datasets: [{
+                label: 'Expertise Level',
+                data: [9.5, 9, 8.5, 8, 8, 9, 8.5, 8],
+                backgroundColor: 'rgba(100, 255, 218, 0.1)',
+                borderColor: '#64ffda',
+                pointBackgroundColor: '#64ffda',
+            }]
+        },
+        options: {
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 10,
+                    grid: { color: 'rgba(100, 255, 218, 0.1)' },
+                    angleLines: { color: 'rgba(100, 255, 218, 0.1)' },
+                    pointLabels: { 
+                        color: '#64ffda',
+                        font: {
+                            family: 'Source Code Pro',
+                            size: 14
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: { 
+                    labels: { 
+                        color: '#64ffda',
+                        font: {
+                            family: 'Source Code Pro',
+                            size: 14
+                        }
+                    } 
+                }
+            }
+        }
+    });
+</script>
+
+    <script>
+        // Matrix Background
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const letters = '01';
+        const fontSize = 14;
+        const columns = canvas.width/fontSize;
+        const drops = [];
+        
+        for(let x = 0; x < columns; x++) drops[x] = 1;
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(10, 25, 47, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = var(--matrix-green);
+            ctx.font = fontSize + 'px monospace';
+
+            for(let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random()*letters.length)];
+                ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+                if(drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 50);
+
+        // Skills Radar Chart
+        const skillsCtx = document.getElementById('skillsChart').getContext('2d');
+        new Chart(skillsCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Python', 'Machine Learning', 'Big Data', 'Google Cloud', 'SQL', 'NLP'],
+                datasets: [{
+                    label: 'Expertise Level',
+                    data: [9.5, 7, 7, 7, 9, 7],
+                    backgroundColor: 'rgba(100, 255, 218, 0.1)',
+                    borderColor: '#64ffda',
+                    pointBackgroundColor: '#64ffda',
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10,
+                        grid: { color: 'rgba(100, 255, 218, 0.1)' },
+                        angleLines: { color: 'rgba(100, 255, 218, 0.1)' },
+                        pointLabels: { color: '#64ffda' }
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: '#64ffda' } }
+                }
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
